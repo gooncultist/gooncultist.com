@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gooncultist</title>
+    <style>
+        @font-face {
+            font-family: 'FA Sysfont C';
+            src: url('./fonts/sysfont/webfonts/sysfont.woff2') format('woff2'), url('./fonts/sysfont/webfonts/sysfont.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'FA Sysfont C', 'Chicago', Arial, sans-serif;
+            background: url('./assets/background.png') repeat;
+            background-size: cover; /* Ensures the image covers the viewport without stretching */
+            background-attachment: fixed; /* Fixes the background image position */
+            color: black;
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+            font-size: 1.5em;
+        }
+
+        a {
+            color: black;
+        }
+
+        .menu-bar {
+            background: #f0f0f0;
+            color: black;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            gap: 40px; /* Ensures spacing between items */
+            padding-left: 20px;
+            width: 100vw;
+            box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+            position: relative;
+            font-size: 1em;
+            margin: 0;
+        }
+
+        .menu-bar span {
+            cursor: pointer;
+            position: relative;
+            padding: 0 10px;
+            line-height: 45px;
+            margin: 0;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%; /* Aligns directly below the menubar */
+            left: 0;
+            background: white;
+            border: 1px solid #ccc;
+            list-style: none;
+            padding: 10px 0;
+            min-width: 150px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            margin: 0;
+            z-index: 9999;
+        }
+
+        .dropdown li {
+            padding: 10px 15px;
+            cursor: default;
+        }
+
+        .dropdown li:hover {
+            background: #ddd;
+        }
+
+        .menu-bar span:hover .dropdown {
+            display: block;
+        }
+
+        .window {
+            background: white;
+            border: 2px solid #000;
+            box-shadow: 5px 5px 0 #888;
+            display: none;
+            font-size: 1em;
+        }
+
+        .window-header {
+            background: #f0f0f0;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            cursor: grab;
+            color: black;
+        }
+
+        .window-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding: 0;
+        }
+
+        .window-text {
+            padding: 0 10px;
+        }
+
+        .close-btn {
+            margin-left: auto;
+            color: black;
+            cursor: pointer;
+        }
+
+        .desktop-icon {
+            position: absolute;
+            text-align: center;
+            cursor: pointer;
+            font-size: 1em;
+        }
+
+        .desktop-icon img {
+            width: 96px;
+            height: 96px;
+            display: block;
+        }
+
+        .desktop-icon span {
+            display: inline-block;
+            margin-top: 8px;
+            background: white;
+            padding: 3px 6px;
+            border-radius: 4px;
+        }
+
+        .about-window {
+            position: absolute;
+            top: 100px;
+            left: 10%;
+        }
+
+        .home-window {
+            display: block;
+            position: absolute;
+            border: 2px solid #000;
+            box-shadow: 5px 5px 0 #888;
+            background: white;
+            overflow: hidden;
+            resize: none;
+        }
+
+        .home-window img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-bar">
+        <span>File
+            <ul class="dropdown">
+                <li><a href="mailto:gooncultist@gmail.com">Complaint</a></li>
+            </ul>
+        </span>
+        <span>Edit
+            <ul class="dropdown">
+                <li>NO</li>
+                <li>NO</li>
+                <li>NO</li>
+            </ul>
+        </span>
+        <span>View
+            <ul class="dropdown">
+                <li><a href="https://x.com/gooncultist/status/1883822783979008357">Compass</a></li>
+                <li><a href="https://x.com/search?q=from%3Agooncultist%20%22type%20of%20guy%22&src=typed_query">Guys</a></li>
+                <li><a href="https://x.com/search?q=from%3Agooncultist%20%22gm%22&src=typed_query&f=media">GM</a></li>
+                <li><a href="https://pmvhaven.com/profile/gooncultist">Fav PMVs</a></li>
+            </ul>
+        </span>
+        <span>Special
+            <ul class="dropdown">
+                <li><a onclick="openWindow('home')"><u>Alice</u></a></li>
+                <li><a href="https://projects.bi-caps.com/archive">Archive</a></li>
+                <li><a href="https://soundgasm.net/u/worship-porn-my-goddess">ASMR</a></li>
+            </ul>
+        </span>
+    </div>
+
+    <div class="desktop-icon" style="top: 100px; right: 170px;" onclick="openWindow('about')">
+        <img src="./assets/calf-icon.png" alt="About Icon">
+        <span>about</span>
+    </div>
+
+    <a href="https://substack.com/@gooncultist/posts" target="_blank" class="desktop-icon" style="top: 100px; right: 30px;">
+        <img src="./assets/substack-icon.png" alt="Substack Icon">
+        <span>blog</span>
+    </a>
+
+    <a href="https://x.com/gooncultist" target="_blank" class="desktop-icon" style="top: 300px; right: 170px;">
+        <img src="./assets/twitter-icon.png" alt="Twitter Icon">
+        <span>twitter</span>
+    </a>
+
+    <a href="https://bsky.app/profile/gooncultist.com" target="_blank" class="desktop-icon" style="top: 300px; right: 30px;">
+        <img src="./assets/bluesky-icon.png" alt="Bluesky Icon">
+        <span>bluesky</span>
+    </a>
+
+    <div id="home" class="window home-window" style="display: none;">
+        <div class="window-header" onmousedown="dragStart(event, 'home')">
+            remember...
+            <span class="close-btn" onclick="closeWindow('home')">X</span>
+        </div>
+        <div class="window-content">
+            <img src="./assets/alice-main.jpg" alt="you will always have a home here">
+        </div>
+    </div>
+
+    <div id="about" class="window about-window" style="width: 350px;">
+        <div class="window-header" onmousedown="dragStart(event, 'about')">
+            about
+            <span class="close-btn" onclick="closeWindow('about')">X</span>
+        </div>
+        <div class="window-content window-text">
+            <p>did you know? there are people under trauma-based mind control running hypnotically implanted computer programs and together they form a networked neosexuality which will devour the earth.</p>
+        </div>
+    </div>
+
+    <script>
+        function adjustHomeWindow() {
+            const homeWindow = document.getElementById('home');
+            const homeImage = homeWindow.querySelector('img');
+
+            const pageWidth = window.innerWidth;
+            const pageHeight = window.innerHeight;
+            const imageAspectRatio = homeImage.naturalWidth / homeImage.naturalHeight;
+
+            const scaleFactor = 0.7;
+            const windowWidth = Math.min(pageWidth * scaleFactor, pageHeight * scaleFactor * imageAspectRatio);
+            const windowHeight = windowWidth / imageAspectRatio;
+
+            homeWindow.style.width = `${windowWidth}px`;
+            homeWindow.style.height = `${windowHeight}px`;
+            homeWindow.style.left = `${Math.max(0, (pageWidth - windowWidth) / 2)}px`;
+            homeWindow.style.top = `${Math.max(0, (pageHeight - windowHeight) / 2)}px`;
+        }
+
+        window.addEventListener('load', () => {
+            adjustHomeWindow();
+        });
+        window.addEventListener('resize', adjustHomeWindow);
+
+        function dragStart(event, id) {
+            let currentWindow = document.getElementById(id);
+            let rect = currentWindow.getBoundingClientRect();
+            let offsetX = event.clientX - rect.left;
+            let offsetY = event.clientY - rect.top;
+
+            function drag(event) {
+                let newX = event.clientX - offsetX;
+                let newY = event.clientY - offsetY;
+
+                // Constrain movement within the viewport
+                newX = Math.max(0, Math.min(newX, window.innerWidth - currentWindow.offsetWidth));
+                newY = Math.max(0, Math.min(newY, window.innerHeight - currentWindow.offsetHeight));
+
+                currentWindow.style.left = `${newX}px`;
+                currentWindow.style.top = `${newY}px`;
+            }
+
+            function dragEnd() {
+                document.removeEventListener('mousemove', drag);
+                document.removeEventListener('mouseup', dragEnd);
+            }
+
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', dragEnd);
+            event.preventDefault();
+        }
+
+        function openWindow(id) {
+            document.getElementById(id).style.display = 'block';
+        }
+
+        function closeWindow(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+    </script>
+</body>
+</html>
+
